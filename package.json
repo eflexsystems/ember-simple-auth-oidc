@@ -38,14 +38,12 @@
   "devDependencies": {
     "@adfinis-sygroup/eslint-config": "1.5.0",
     "@adfinis-sygroup/semantic-release-config": "3.4.0",
-    "@apollo/client": "3.6.0",
     "@ember/optional-features": "2.0.0",
     "@ember/test-helpers": "2.7.0",
     "@embroider/test-setup": "1.6.0",
     "@glimmer/tracking": "1.1.2",
     "babel-eslint": "10.1.0",
     "broccoli-asset-rev": "3.0.0",
-    "ember-apollo-client": "4.0.2",
     "ember-cli": "4.3.0",
     "ember-cli-dependency-checker": "3.3.1",
     "ember-cli-htmlbars": "6.0.1",
@@ -78,14 +76,6 @@
     "qunit": "2.18.2",
     "qunit-dom": "2.0.0",
     "webpack": "5.72.0"
-  },
-  "peerDependencies": {
-    "@apollo/client": ">= 3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@apollo/client": {
-      "optional": true
-    }
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
