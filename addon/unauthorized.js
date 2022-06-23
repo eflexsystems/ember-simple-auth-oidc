@@ -1,8 +1,7 @@
+import { getConfig } from "@eflexsystems/ember-simple-auth-oidc/config";
+import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-url";
 import { getOwner } from "@ember/application";
 import { isTesting, macroCondition } from "@embroider/macros";
-
-import { getConfig } from "ember-simple-auth-oidc/config";
-import getAbsoluteUrl from "ember-simple-auth-oidc/utils/absolute-url";
 
 export default function handleUnauthorized(session) {
   if (session.isAuthenticated) {

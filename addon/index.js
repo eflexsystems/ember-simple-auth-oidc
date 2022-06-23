@@ -1,1 +1,1 @@
-export { default as handleUnauthorized } from "ember-simple-auth-oidc/unauthorized";
+export { default as handleUnauthorized } from "@eflexsystems/ember-simple-auth-oidc/unauthorized";

@@ -1,8 +1,7 @@
+import config from "@eflexsystems/ember-simple-auth-oidc/config";
 import { inject as service } from "@ember/service";
 import { enqueueTask } from "ember-concurrency";
 import SessionServiceESA from "ember-simple-auth/services/session";
-
-import config from "ember-simple-auth-oidc/config";
 
 export default class Service extends SessionServiceESA {
   @service router;

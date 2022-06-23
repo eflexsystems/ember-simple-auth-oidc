@@ -1,1 +1,1 @@
-export { default } from "ember-simple-auth-oidc/authenticators/oidc";
+export { default } from "@eflexsystems/ember-simple-auth-oidc/authenticators/oidc";

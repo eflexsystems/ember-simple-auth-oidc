@@ -1,3 +1,5 @@
+import config from "@eflexsystems/ember-simple-auth-oidc/config";
+import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-url";
 import { later } from "@ember/runloop";
 import { inject as service } from "@ember/service";
 import {
@@ -9,9 +11,6 @@ import BaseAuthenticator from "ember-simple-auth/authenticators/base";
 import fetch from "fetch";
 import { resolve } from "rsvp";
 import { TrackedObject } from "tracked-built-ins";
-
-import config from "ember-simple-auth-oidc/config";
-import getAbsoluteUrl from "ember-simple-auth-oidc/utils/absolute-url";
 
 export default class OidcAuthenticator extends BaseAuthenticator {
   @service router;

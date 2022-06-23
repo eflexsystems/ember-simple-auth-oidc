@@ -1,7 +1,6 @@
+import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-url";
 import { setupTest } from "ember-qunit";
 import { module, test } from "qunit";
-
-import getAbsoluteUrl from "ember-simple-auth-oidc/utils/absolute-url";
 
 module("Unit | Utils | absoluteUrl", function (hooks) {
   setupTest(hooks);
