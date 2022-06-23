@@ -134,6 +134,7 @@ export default class OIDCAuthenticationRoute extends Route {
       `redirect_uri=${this.redirectUri}`,
       `response_type=code`,
       `state=${state}`,
+      `audience=${this.config.audience}`,
       `scope=${this.config.scope}`,
       queryParams[key] ? `${key}=${queryParams[key]}` : null,
     ]
