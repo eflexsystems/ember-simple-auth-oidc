@@ -1,6 +1,7 @@
 import { assert } from "@ember/debug";
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
+import pkceChallenge from "pkce-challenge";
 import { v4 } from "uuid";
 
 import config from "ember-simple-auth-oidc/config";
@@ -129,7 +130,7 @@ export default class OIDCAuthenticationRoute extends Route {
     // forward `login_hint` query param if present
     const key = this.config.loginHintName || "login_hint";
 
-    const search = [
+    let search = [
       `client_id=${this.config.clientId}`,
       `redirect_uri=${this.redirectUri}`,
       `response_type=code`,
@@ -137,9 +138,18 @@ export default class OIDCAuthenticationRoute extends Route {
       `audience=${this.config.audience}`,
       `scope=${this.config.scope}`,
       queryParams[key] ? `${key}=${queryParams[key]}` : null,
-    ]
-      .filter(Boolean)
-      .join("&");
+    ];
+
+    if (this.config.usePkce) {
+      const { code_challenge, code_verifier } = pkceChallenge();
+      this.session.set("data.code_verifier", code_verifier);
+      search.push(
+        `code_challenge=${code_challenge}`,
+        "code_challenge_method=S256"
+      );
+    }
+
+    search = search.filter(Boolean).join("&");
 
     this._redirectToUrl(
       `${getAbsoluteUrl(this.config.host)}${this.config.authEndpoint}?${search}`

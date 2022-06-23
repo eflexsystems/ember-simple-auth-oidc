@@ -48,6 +48,9 @@ export default class OidcAuthenticator extends BaseAuthenticator {
       grant_type: "authorization_code",
       redirect_uri: redirectUri,
     };
+
+    this._setCodeVerifierOnBody(bodyObject);
+
     const body = Object.keys(bodyObject)
       .map((k) => `${k}=${encodeURIComponent(bodyObject[k])}`)
       .join("&");
@@ -165,6 +168,9 @@ export default class OidcAuthenticator extends BaseAuthenticator {
         grant_type: "refresh_token",
         redirect_uri: redirectUri,
       };
+
+      this._setCodeVerifierOnBody(bodyObject);
+
       const body = Object.keys(bodyObject)
         .map((k) => `${k}=${encodeURIComponent(bodyObject[k])}`)
         .join("&");
@@ -268,5 +274,19 @@ export default class OidcAuthenticator extends BaseAuthenticator {
       expireTime,
       redirectUri,
     });
+  }
+
+  _setCodeVerifierOnBody(body) {
+    if (!this.config.usePkce) {
+      return;
+    }
+
+    const code_verifier = this.session.data.code_verifier;
+
+    if (!code_verifier) {
+      return;
+    }
+
+    body.code_verifier = code_verifier;
   }
 }
