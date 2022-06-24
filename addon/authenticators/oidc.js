@@ -28,7 +28,10 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * @returns {Object} The parsed response data
    */
   async authenticate({ code, redirectUri, isRefresh }) {
-    if (!this.config.tokenEndpoint || !this.config.userinfoEndpoint) {
+    if (
+      !this.config.tokenEndpoint ||
+      (!this.config.getUserinfoFromIdToken && !this.config.userinfoEndpoint)
+    ) {
       throw new Error(
         "Please define all OIDC endpoints (auth, token, userinfo)"
       );
@@ -222,9 +225,14 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * Request user information from the openid userinfo endpoint
    *
    * @param {String} accessToken The raw access token
+   * @param {String} idToken The raw id token
    * @returns {Object} Object containing the user information
    */
-  async _getUserinfo(accessToken) {
+  async _getUserinfo(accessToken, idToken) {
+    if (this.config.getUserinfoFromIdToken) {
+      return JSON.parse(atob(idToken.split(".")[1]));
+    }
+
     const response = await fetch(
       getAbsoluteUrl(this.config.userinfoEndpoint, this.config.host),
       {
@@ -257,7 +265,7 @@ export default class OidcAuthenticator extends BaseAuthenticator {
     id_token,
     redirectUri,
   }) {
-    const userinfo = await this._getUserinfo(access_token);
+    const userinfo = await this._getUserinfo(access_token, id_token);
 
     const expireInMilliseconds = expires_in
       ? expires_in * 1000
