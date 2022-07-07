@@ -28,13 +28,8 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * @returns {Object} The parsed response data
    */
   async authenticate({ code, redirectUri, isRefresh }) {
-    if (
-      !this.config.tokenEndpoint ||
-      (!this.config.getUserinfoFromIdToken && !this.config.userinfoEndpoint)
-    ) {
-      throw new Error(
-        "Please define all OIDC endpoints (auth, token, userinfo)"
-      );
+    if (!this.config.tokenEndpoint) {
+      throw new Error("Please define all OIDC endpoints (auth, token)");
     }
 
     if (isRefresh) {
@@ -229,7 +224,7 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * @returns {Object} Object containing the user information
    */
   async _getUserinfo(accessToken, idToken) {
-    if (this.config.getUserinfoFromIdToken) {
+    if (!this.config.userinfoEndpoint) {
       return JSON.parse(atob(idToken.split(".")[1]));
     }
 
