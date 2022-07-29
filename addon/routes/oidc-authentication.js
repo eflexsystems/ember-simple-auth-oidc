@@ -151,7 +151,7 @@ export default class OIDCAuthenticationRoute extends Route {
     search = search.filter(Boolean).join("&");
 
     this._redirectToUrl(
-      `${getAbsoluteUrl(this.config.host)}${this.config.authEndpoint}?${search}`
+      `${getAbsoluteUrl(this.config.authEndpoint, this.config.host)}?${search}`
     );
   }
 }
