@@ -11,6 +11,7 @@ import BaseAuthenticator from "ember-simple-auth/authenticators/base";
 import fetch from "fetch";
 import { resolve } from "rsvp";
 import { TrackedObject } from "tracked-built-ins";
+import { isPresent } from '@ember/utils';
 
 export default class OidcAuthenticator extends BaseAuthenticator {
   @service router;
@@ -165,6 +166,10 @@ export default class OidcAuthenticator extends BaseAuthenticator {
         grant_type: "refresh_token",
         redirect_uri: redirectUri,
       };
+
+      if (isPresent(this.config.clientSecret)) {
+        bodyObject.client_secret = this.config.clientSecret;
+      }
 
       this._setCodeVerifierOnBody(bodyObject);
 
