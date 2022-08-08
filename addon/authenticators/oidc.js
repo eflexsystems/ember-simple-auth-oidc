@@ -47,6 +47,10 @@ export default class OidcAuthenticator extends BaseAuthenticator {
       redirect_uri: redirectUri,
     };
 
+    if (isPresent(this.config.clientSecret)) {
+      bodyObject.client_secret = this.config.clientSecret;
+    }
+
     this._setCodeVerifierOnBody(bodyObject);
 
     const body = Object.keys(bodyObject)
