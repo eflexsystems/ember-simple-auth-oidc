@@ -43,7 +43,8 @@ module("Unit | Route | oidc-authentication", function (hooks) {
       assert.ok(url.includes(this.config.authEndpoint));
       assert.ok(url.includes(`client_id=${this.config.clientId}`));
       const { protocol, host } = location;
-      assert.ok(url.includes(`redirect_uri=${protocol}//${host}/test`));
+      const expectedUri = encodeURIComponent(`${protocol}//${host}/test`);
+      assert.ok(url.includes(`redirect_uri=${expectedUri}`));
     };
 
     route.afterModel(null, { to: { queryParams: {} } });

@@ -129,26 +129,33 @@ export default class OIDCAuthenticationRoute extends Route {
     // forward `login_hint` query param if present
     const key = this.config.loginHintName || "login_hint";
 
-    let search = [
-      `client_id=${this.config.clientId}`,
-      `redirect_uri=${this.redirectUri}`,
-      `response_type=code`,
-      `state=${state}`,
-      `scope=${this.config.scope}`,
-      this.config.audience ? `audience=${this.config.audience}` : null,
-      queryParams[key] ? `${key}=${queryParams[key]}` : null,
-    ];
+    let search = {
+      client_id: this.config.clientId,
+      redirect_uri: this.redirectUri,
+      response_type: "code",
+      state,
+      scope: this.config.scope,
+    };
+
+    if (queryParams[key]) {
+      search[key] = queryParams[key];
+    }
+
+    if (this.config.audience) {
+      search.audience = this.config.audience;
+    }
 
     if (this.config.usePkce) {
       const { code_challenge, code_verifier } = pkceChallenge();
       this.session.set("data.code_verifier", code_verifier);
-      search.push(
-        `code_challenge=${code_challenge}`,
-        "code_challenge_method=S256"
-      );
+      search.code_challenge = code_challenge;
+      search.code_challenge_method = "S256";
     }
 
-    search = search.filter(Boolean).join("&");
+    search = Object.keys(search)
+      .filter((k) => Boolean(search[k]))
+      .map((k) => `${k}=${encodeURIComponent(search[k])}`)
+      .join("&");
 
     this._redirectToUrl(
       `${getAbsoluteUrl(this.config.authEndpoint, this.config.host)}?${search}`
