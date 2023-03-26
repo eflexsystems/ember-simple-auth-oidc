@@ -1,9 +1,12 @@
 import config from "@eflexsystems/ember-simple-auth-oidc/config";
 import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-url";
+import {
+  generatePkceChallenge,
+  generateCodeVerifier,
+} from "@eflexsystems/ember-simple-auth-oidc/utils/pkce";
 import { assert } from "@ember/debug";
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
-import pkceChallenge from "pkce-challenge";
 import { v4 } from "uuid";
 
 export default class OIDCAuthenticationRoute extends Route {
@@ -30,6 +33,16 @@ export default class OIDCAuthenticationRoute extends Route {
   beforeModel(transition) {
     if (transition.from) {
       this.session.prohibitAuthentication(transition.from.name);
+    }
+
+    // PKCE Verifier has to be set in session, because we redirect
+    if (this.config.enablePkce) {
+      let pkceCodeVerifier = this.session.data.pkceCodeVerifier;
+
+      if (!pkceCodeVerifier) {
+        pkceCodeVerifier = generateCodeVerifier(96);
+        this.session.set("data.pkceCodeVerifier", pkceCodeVerifier);
+      }
     }
   }
 
@@ -97,10 +110,16 @@ export default class OIDCAuthenticationRoute extends Route {
 
     this.session.set("data.state", undefined);
 
-    await this.session.authenticate("authenticator:oidc", {
+    const data = {
       code,
       redirectUri: this.redirectUri,
-    });
+    };
+
+    if (this.config.enablePkce) {
+      data.codeVerifier = this.session.data.pkceCodeVerifier;
+    }
+
+    await this.session.authenticate("authenticator:oidc", data);
   }
 
   /**
@@ -135,20 +154,15 @@ export default class OIDCAuthenticationRoute extends Route {
       response_type: "code",
       state,
       scope: this.config.scope,
+      [key]: queryParams[key],
+      audience: this.config.audience,
     };
 
-    if (queryParams[key]) {
-      search[key] = queryParams[key];
-    }
-
-    if (this.config.audience) {
-      search.audience = this.config.audience;
-    }
-
     if (this.config.usePkce) {
-      const { code_challenge, code_verifier } = pkceChallenge();
-      this.session.set("data.code_verifier", code_verifier);
-      search.code_challenge = code_challenge;
+      const pkceChallenge = generatePkceChallenge(
+        this.session.data.pkceCodeVerifier
+      );
+      search.code_challenge = pkceChallenge;
       search.code_challenge_method = "S256";
     }
 

@@ -10,9 +10,9 @@ OpenID Connect [Authorization Code Flow](https://openid.net/specs/openid-connect
 
 ## Installation
 
-- Ember.js v3.24 or above
-- Ember CLI v3.24 or above
-- Node.js v12 or above
+- Ember.js v3.28 or above
+- Ember CLI v3.28 or above
+- Node.js v14 or above
 
 Note: The addon uses [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 in its implementation, if IE browser support is necessary, a polyfill needs to be provided.
@@ -235,6 +235,9 @@ Amount of retries should be made if the request to fetch a new token fails. Defa
 
 **retryTimeout** `<Number>` (optional)  
 Timeout in milliseconds between each retry if a token refresh should fail. Default is `3000`.
+
+**enablePkce** `<Boolean>` (optional)
+Enables PKCE mechanism to provide additional protection during code to token exchanges. Default is `false`.
 
 ## Contributing
 
