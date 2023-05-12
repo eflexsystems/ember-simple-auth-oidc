@@ -1,6 +1,6 @@
 import { handleUnauthorized } from "@eflexsystems/ember-simple-auth-oidc";
-import RESTAdapter from "@ember-data/adapter/rest";
 import { inject as service } from "@ember/service";
+import RESTAdapter from "@ember-data/adapter/rest";
 
 export default class OIDCRESTAdapter extends RESTAdapter {
   @service session;

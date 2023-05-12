@@ -1,6 +1,6 @@
 import { handleUnauthorized } from "@eflexsystems/ember-simple-auth-oidc";
-import JSONAPIAdapter from "@ember-data/adapter/json-api";
 import { inject as service } from "@ember/service";
+import JSONAPIAdapter from "@ember-data/adapter/json-api";
 
 export default class OIDCJSONAPIAdapter extends JSONAPIAdapter {
   @service session;
