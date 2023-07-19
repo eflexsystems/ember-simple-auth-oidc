@@ -158,7 +158,7 @@ export default class OIDCAuthenticationRoute extends Route {
       audience: this.config.audience,
     };
 
-    if (this.config.usePkce) {
+    if (this.config.enablePkce) {
       const pkceChallenge = generatePkceChallenge(
         this.session.data.pkceCodeVerifier
       );
