@@ -1,7 +1,7 @@
 # ember-simple-auth-oidc
 
 [![npm version](https://badge.fury.io/js/ember-simple-auth-oidc.svg)](https://www.npmjs.com/package/ember-simple-auth-oidc)
-[![Test](https://github.com/adfinis-sygroup/ember-simple-auth-oidc/workflows/Test/badge.svg?branch=main)](https://github.com/adfinis-sygroup/ember-simple-auth-oidc/actions?query=workflow%3ATest)
+[![Test](https://github.com/adfinis/ember-simple-auth-oidc/workflows/Test/badge.svg?branch=main)](https://github.com/adfinis/ember-simple-auth-oidc/actions?query=workflow%3ATest)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -10,9 +10,9 @@ OpenID Connect [Authorization Code Flow](https://openid.net/specs/openid-connect
 
 ## Installation
 
-- Ember.js v3.28 or above
-- Ember CLI v3.28 or above
-- Node.js v14 or above
+- Ember.js v4.4 or above
+- Ember CLI v4.4 or above
+- Node.js v16 or above
 
 Note: The addon uses [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 in its implementation, if IE browser support is necessary, a polyfill needs to be provided.
@@ -249,7 +249,7 @@ Debounce timeout for redirection after (multiple) `401` responses are received t
 
 ### Installation
 
-- `git clone git@github.com:adfinis-sygroup/ember-simple-auth-oidc.git`
+- `git clone git@github.com:adfinis/ember-simple-auth-oidc.git`
 - `cd ember-simple-auth-oidc`
 - `yarn install`
 
