@@ -3,15 +3,21 @@ import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-
 import { later } from "@ember/runloop";
 import { inject as service } from "@ember/service";
 import { isPresent } from "@ember/utils";
-import {
-  isServerErrorResponse,
-  isAbortError,
-  isBadRequestResponse,
-} from "ember-fetch/errors";
 import BaseAuthenticator from "ember-simple-auth/authenticators/base";
-import fetch from "fetch";
 import { resolve } from "rsvp";
 import { TrackedObject } from "tracked-built-ins";
+
+const isServerErrorResponse = (response) => {
+  return response.status >= 500 && response.status < 600;
+};
+
+const isAbortError = (error) => {
+  return error.name === "AbortError";
+};
+
+const isBadRequestResponse = (response) => {
+  return response.status === 400;
+};
 
 export default class OidcAuthenticator extends BaseAuthenticator {
   @service router;
