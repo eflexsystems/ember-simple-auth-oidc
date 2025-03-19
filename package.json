@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ember-simple-auth-oidc",
-  "version": "7.0.4-1",
+  "version": "7.1.0",
   "description": "A Ember Simple Auth addon which implements the OpenID Connect Authorization Code Flow.",
   "keywords": [
     "ember-addon"
@@ -100,7 +100,7 @@
     "ember-data": "~4.12.0 || >= 5.0.0",
     "ember-source": ">= 4.0.0"
   },
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "engines": {
     "node": ">= 18"
   },
@@ -119,7 +119,6 @@
       "@commitlint/config-conventional"
     ]
   },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.hbs": "ember-template-lint --fix",
