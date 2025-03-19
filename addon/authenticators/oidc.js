@@ -35,14 +35,16 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * @returns {Object} The parsed response data
    */
   async authenticate({ code, redirectUri, codeVerifier, isRefresh }) {
-    if (!this.config.tokenEndpoint) {
-      throw new Error("Please define all OIDC endpoints (auth, token)");
+    if (!this.config.tokenEndpoint || !this.config.userinfoEndpoint) {
+      throw new Error(
+        "Please define all OIDC endpoints (auth, token, userinfo)",
+      );
     }
 
     if (isRefresh) {
       return await this._refresh(
         this.session.data.authenticated.refresh_token,
-        redirectUri
+        redirectUri,
       );
     }
 
@@ -74,7 +76,7 @@ export default class OidcAuthenticator extends BaseAuthenticator {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body,
-      }
+      },
     );
 
     const isServerError = isServerErrorResponse(response);
@@ -118,7 +120,9 @@ export default class OidcAuthenticator extends BaseAuthenticator {
 
     if (this.config.afterLogoutUri) {
       params.push(
-        `post_logout_redirect_uri=${getAbsoluteUrl(this.config.afterLogoutUri)}`
+        `post_logout_redirect_uri=${getAbsoluteUrl(
+          this.config.afterLogoutUri,
+        )}`,
       );
     }
 
@@ -129,8 +133,8 @@ export default class OidcAuthenticator extends BaseAuthenticator {
     this._redirectToUrl(
       `${getAbsoluteUrl(
         this.config.endSessionEndpoint,
-        this.config.host
-      )}?${params.join("&")}`
+        this.config.host,
+      )}?${params.join("&")}`,
     );
   }
 
@@ -196,7 +200,7 @@ export default class OidcAuthenticator extends BaseAuthenticator {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body,
-        }
+        },
       );
       isServerError = isServerErrorResponse(response);
       if (isServerError) throw new Error(response.message);
@@ -221,9 +225,9 @@ export default class OidcAuthenticator extends BaseAuthenticator {
             this,
             () =>
               resolve(
-                this._refresh(refresh_token, redirectUri, retryCount + 1)
+                this._refresh(refresh_token, redirectUri, retryCount + 1),
               ),
-            this.config.retryTimeout
+            this.config.retryTimeout,
           );
         });
       }
@@ -250,7 +254,7 @@ export default class OidcAuthenticator extends BaseAuthenticator {
           Authorization: `${this.config.authPrefix} ${accessToken}`,
           Accept: "application/json",
         },
-      }
+      },
     );
 
     const userinfo = await response.json();

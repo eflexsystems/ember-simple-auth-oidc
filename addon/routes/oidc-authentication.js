@@ -6,7 +6,7 @@ import {
 } from "@eflexsystems/ember-simple-auth-oidc/utils/pkce";
 import { assert } from "@ember/debug";
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { v4 } from "uuid";
 
 export default class OIDCAuthenticationRoute extends Route {
@@ -68,7 +68,7 @@ export default class OIDCAuthenticationRoute extends Route {
   async afterModel(_, transition) {
     if (!this.config.authEndpoint) {
       throw new Error(
-        "Please define all OIDC endpoints (auth, token, logout, userinfo)"
+        "Please define all OIDC endpoints (auth, token, logout, userinfo)",
       );
     }
 
@@ -80,7 +80,7 @@ export default class OIDCAuthenticationRoute extends Route {
       return await this._handleCallbackRequest(
         queryParams.code,
         queryParams.state,
-        transition
+        transition,
       );
     }
 

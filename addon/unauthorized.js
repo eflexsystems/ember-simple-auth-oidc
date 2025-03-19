@@ -27,7 +27,7 @@ export default function handleUnauthorized(session) {
       this,
       replaceUri,
       session,
-      getConfig(getOwner(session)).unauthorizedRequestRedirectTimeout
+      getConfig(getOwner(session)).unauthorizedRequestRedirectTimeout,
     );
   }
 }
