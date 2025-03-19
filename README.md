@@ -1,7 +1,7 @@
 # ember-simple-auth-oidc
 
 [![npm version](https://badge.fury.io/js/ember-simple-auth-oidc.svg)](https://www.npmjs.com/package/ember-simple-auth-oidc)
-[![Test](https://github.com/adfinis/ember-simple-auth-oidc/workflows/Test/badge.svg?branch=main)](https://github.com/adfinis/ember-simple-auth-oidc/actions?query=workflow%3ATest)
+[![Test](https://github.com/adfinis/ember-simple-auth-oidc/actions/workflows/ci.yml/badge.svg)](https://github.com/adfinis/ember-simple-auth-oidc/actions/workflows/ci.yml)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -10,9 +10,9 @@ OpenID Connect [Authorization Code Flow](https://openid.net/specs/openid-connect
 
 ## Installation
 
-- Ember.js v4.4 or above
-- Ember CLI v4.4 or above
-- Node.js v16 or above
+- Ember.js v4.12 or above
+- Ember CLI v4.12 or above
+- Node.js v18 or above
 
 Note: The addon uses [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 in its implementation, if IE browser support is necessary, a polyfill needs to be provided.
@@ -42,7 +42,7 @@ export default class LoginRoute extends OIDCAuthenticationRoute {}
 
 Authenticated routes need to call `session.requireAuthentication` in their
 respective `beforeModel`, to ensure that unauthenticated transitions are
-prevented and redirected to the authentication route. It's recommended to 
+prevented and redirected to the authentication route. It's recommended to
 await the `beforeModel` hook, to make sure authentication is handled before
 other API calls are triggered (which might lead to `401` responses, potentially
 causing redirect loops).

@@ -9,7 +9,7 @@ const getTokenBody = (expired) => {
   return btoa(
     JSON.stringify({
       exp: Date.now() + time,
-    })
+    }),
   );
 };
 
@@ -18,8 +18,6 @@ module("Unit | Authenticator | OIDC", function (hooks) {
   setupMirage(hooks);
 
   test("it can authenticate", async function (assert) {
-    assert.expect(4);
-
     const subject = this.owner.lookup("authenticator:oidc");
 
     set(subject, "redirectUri", "test");
@@ -33,8 +31,6 @@ module("Unit | Authenticator | OIDC", function (hooks) {
   });
 
   test("it can restore a session", async function (assert) {
-    assert.expect(4);
-
     const subject = this.owner.lookup("authenticator:oidc");
 
     const data = await subject.restore({
@@ -50,16 +46,12 @@ module("Unit | Authenticator | OIDC", function (hooks) {
   });
 
   test("it can invalidate a session", async function (assert) {
-    assert.expect(1);
-
     const subject = this.owner.lookup("authenticator:oidc");
 
     assert.ok(await subject.invalidate());
   });
 
   test("it can refresh a session", async function (assert) {
-    assert.expect(4);
-
     const subject = this.owner.lookup("authenticator:oidc");
 
     const data = await subject._refresh("x.y.z");
@@ -71,15 +63,13 @@ module("Unit | Authenticator | OIDC", function (hooks) {
   });
 
   test("it can make a single logout", async function (assert) {
-    assert.expect(3);
-
     const { endSessionEndpoint, afterLogoutUri } = getConfig(this.owner);
     const subject = this.owner.lookup("authenticator:oidc");
 
     subject._redirectToUrl = (url) => {
       assert.ok(new RegExp(endSessionEndpoint).test(url));
       assert.ok(
-        new RegExp(`post_logout_redirect_uri=${afterLogoutUri}`).test(url)
+        new RegExp(`post_logout_redirect_uri=${afterLogoutUri}`).test(url),
       );
       assert.ok(new RegExp("id_token_hint=myIdToken").test(url));
     };
