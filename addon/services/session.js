@@ -1,5 +1,5 @@
 import config from "@eflexsystems/ember-simple-auth-oidc/config";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { task } from "ember-concurrency";
 import SessionServiceESA from "ember-simple-auth/services/session";
 import { waitFor } from '@ember/test-waiters';

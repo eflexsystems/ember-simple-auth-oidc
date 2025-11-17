@@ -1,7 +1,7 @@
 import config from "@eflexsystems/ember-simple-auth-oidc/config";
 import getAbsoluteUrl from "@eflexsystems/ember-simple-auth-oidc/utils/absolute-url";
 import { later } from "@ember/runloop";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { isPresent } from "@ember/utils";
 import BaseAuthenticator from "ember-simple-auth/authenticators/base";
 import { resolve } from "rsvp";
