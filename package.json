@@ -70,7 +70,7 @@
     "ember-load-initializers": "3.0.1",
     "ember-qunit": "8.1.1",
     "ember-resolver": "13.1.0",
-    "ember-source": "6.0.1",
+    "ember-source": "^6.0.0",
     "ember-source-channel-url": "3.0.0",
     "ember-template-lint": "6.0.0",
     "ember-try": "3.0.0",
@@ -95,6 +95,9 @@
     "stylelint-config-standard": "36.0.1",
     "stylelint-prettier": "5.0.2",
     "webpack": "5.96.1"
+  },
+  "peerDependencies": {
+    "ember-source": ">= 6.0.0"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "engines": {
