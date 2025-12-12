@@ -9,6 +9,7 @@
 /.env*
 /.pnp*
 /.eslintcache
+/.idea
 /coverage/
 /npm-debug.log*
 /testem.log

@@ -35,9 +35,9 @@ export default class OidcAuthenticator extends BaseAuthenticator {
    * @returns {Object} The parsed response data
    */
   async authenticate({ code, redirectUri, codeVerifier, isRefresh }) {
-    if (!this.config.tokenEndpoint || !this.config.userinfoEndpoint) {
+    if (!this.config.tokenEndpoint) {
       throw new Error(
-        "Please define all OIDC endpoints (auth, token, userinfo)",
+        "Please define all OIDC endpoints (auth, token)",
       );
     }
 
